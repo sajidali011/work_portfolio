@@ -174,9 +174,42 @@
 </head>
 <body>
 
-    <a href="YOUR_YT_LINK" class="yt-float" target="_blank" title="Watch My Tutorials">
+<a href="https://wa.me/917497817973" class="wa-float" target="_blank" title="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<a href="tel:+917497817973" class="phone-float" title="Call Me">
+    <i class="fas fa-phone-alt"></i>
+</a>
+
+    <a href="https://www.youtube.com/@Rv_by_sajid" class="yt-float" target="_blank" title="Watch My Tutorials">
         <i class="fab fa-youtube"></i>
     </a>
+
+    <style>
+        /* Common Style for all floating buttons */
+.yt-float, .wa-float, .phone-float {
+    position: fixed;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 25px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* Positions (Adjusting gap between buttons) */
+.yt-float { bottom: 20px; background-color: #FF0000; } /* Sabse niche */
+.wa-float { bottom: 80px; background-color: #25d366; } /* WhatsApp beech mein */
+.phone-float { bottom: 140px; background-color: #007bff; } /* Phone sabse upar */
+    </style>
 
     <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white py-3">
         <div class="container">
