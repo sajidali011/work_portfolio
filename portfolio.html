@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sajid Ali | Premium Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --yt-color: #ff0000;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+        }
+        body { font-family: 'Outfit', sans-serif; background-color: #f0f2f5; overflow-x: hidden; }
+        
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%; /* Ensures all cards in a row have same height */
+            display: flex;
+            flex-direction: column;
+        }
+        .glass-card:hover { transform: scale(1.03); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+
+        /* Fixed Media Box for uniform images/videos */
+        .media-box {
+            position: relative;
+            width: 100%;
+            height: 220px; /* Fixed height for consistency */
+            overflow: hidden;
+            background: #000;
+        }
+        .media-box img, .media-box iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Crops image to fill area without stretching */
+            border: none;
+        }
+        .badge-type {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(13, 110, 253, 0.9);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        /* Floating YT Button */
+        .yt-float {
+            position: fixed; bottom: 30px; right: 30px; z-index: 1000;
+            background: var(--yt-color); color: white; width: 60px; height: 60px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 25px; box-shadow: 0 10px 20px rgba(255,0,0,0.3);
+            animation: pulse 2s infinite; text-decoration: none;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Hero Section Gradient */
+        .hero-section {
+            padding: 150px 0 100px;
+            background: radial-gradient(circle at top right, #e3f2fd, #ffffff);
+        }
+        .profile-img-container {
+            position: relative; display: inline-block;
+        }
+        .profile-img-container::before {
+            content: ''; position: absolute; top: -15px; left: -15px; right: -15px; bottom: -15px;
+            border: 2px dashed var(--primary-color); border-radius: 50%;
+            animation: rotate 10s linear infinite;
+        }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+
+        .profile-img { width: 280px; height: 280px; border-radius: 50%; object-fit: cover; position: relative; z-index: 1; }
+
+        .skill-tag {
+            background: white; padding: 8px 15px; border-radius: 12px;
+            font-size: 14px; font-weight: 600; color: #444;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: inline-block; margin: 5px;
+        }
+
+        /* Video Section Custom Styling */
+        .video-container {
+            border-radius: 20px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .nav-link { font-weight: 600; position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: 0; left: 0; background: var(--primary-color);
+            transition: 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Adjusting Card Content to Push Buttons Down */
+        .card-body-custom {
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+
+         /* About Section Enhancements */
+    #about {
+        padding: 100px 0; /* Extra spacing for premium feel */
+    }
+
+    .about-heading {
+        font-size: 3.5rem; /* Larger Title */
+        letter-spacing: -1.5px;
+        background: linear-gradient(90deg, #212529, #0d6efd);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .about-text {
+        font-size: 1.15rem; /* Increased readable size */
+        line-height: 1.8;
+        color: #4a4a4a;
+    }
+
+    .highlight-blue {
+        color: #0d6efd;
+        font-weight: 700;
+        position: relative;
+        display: inline-block;
+    }
+
+    .tech-tag {
+        background: rgba(13, 110, 253, 0.08);
+        padding: 2px 8px;
+        border-radius: 6px;
+        color: #0d6efd;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    /* Stats Card Hover */
+    .stat-card {
+        transition: all 0.3s ease;
+        border: 1px solid #eee !important;
+    }
+
+    .stat-card:hover {
+        border-color: #0d6efd !important;
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(13, 110, 253, 0.1);
+    }
+
+    .video-wrapper {
+        border-radius: 30px;
+        overflow: hidden;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        border: 8px solid #f8f9fa;
+    }
+    </style>
+</head>
+<body>
+
+    <a href="YOUR_YT_LINK" class="yt-float" target="_blank" title="Watch My Tutorials">
+        <i class="fab fa-youtube"></i>
+    </a>
+
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white py-3">
+        <div class="container">
+            <a class="navbar-brand fs-3 fw-bold" href="#">SAJID <span class="text-primary">ALI</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto gap-3">
+                    <li><a class="nav-link" href="#about">About</a></li>
+                    <li><a class="nav-link" href="#skills">Skills</a></li>
+                    <li><a class="nav-link" href="#projects">Projects</a></li>
+                   <li>
+    <a class="btn btn-primary rounded-pill px-4" 
+       href="tel:+917497817973" 
+       style="background: #0d6efd; color: #fff; padding: 8px 25px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: 0.3s; border: 1px solid #0d6efd;" 
+       onmouseover="this.style.background='transparent'; this.style.color='#0d6efd'" 
+       onmouseout="this.style.background='#0d6efd'; this.style.color='#fff'">
+       <i class="fas fa-phone-alt me-2"></i> Contact Me
+    </a>
+</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start" data-aos="fade-right">
+                    <span class="badge bg-primary-subtle text-primary px-3 py-2 mb-3 rounded-pill fw-bold">WEB EXPERT & MARKETER</span>
+                    <h1 class="display-2 fw-800 mb-3">Sajid Ali</h1>
+                    <h3 class="text-secondary mb-4">Full-StackWeb Developer <span class="text-primary">Digital Marketing Excutive</span></h3>
+                    
+                    <div class="d-flex gap-3 justify-content-center justify-content-md-start">
+                        <a href="sajid_ali_cv.pdf" download="Sajid_Ali_CV" class="btn btn-dark btn-lg rounded-pill px-5 shadow">
+    <i class="fas fa-download me-2"></i> Get CV
+</a>
+                        <div class="social-links d-flex align-items-center gap-3 ms-3">
+                            <a href="https://github.com/" class="text-dark fs-4"><i class="fab fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/sajid-ali-240854266/" class="text-primary fs-4"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center mt-5 mt-md-0" data-aos="zoom-in">
+                    <div class="profile-img-container">
+                        <img src="sajid.jpg" class="profile-img shadow-lg" alt="Sajid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section id="about" class="bg-white">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6" data-aos="fade-up">
+                <h2 class="fw-bold about-heading mb-4">About Me</h2>
+                
+                <p class="about-text mb-4">
+                    Hey, I'm <strong class="text-dark fs-4">Sajid Ali</strong>! <br>
+                    I’m a <span class="highlight-blue">Full Stack Web Developer</span> with a passion for building websites that not only look great but also deliver real results. 
+                    
+                    <span id="dots">...</span>
+                    
+                    <span id="moreText" style="display: none;">
+                        <br><br>
+                        I work with technologies like 
+                        <span class="tech-tag">HTML</span> <span class="tech-tag">CSS</span> <span class="tech-tag">JavaScript</span> 
+                        <span class="tech-tag">React</span> <span class="tech-tag">PHP</span> <span class="tech-tag">Laravel</span> 
+                        to create responsive, fast, and user-friendly websites. 
+                        <br><br>
+                        Along with development, I handle <strong class="text-dark">Digital Marketing</strong>. 
+                        I have experience in <span class="text-primary fw-bold">SEO, SMM, and Content Writing</span>. 
+                        I also leverage <strong class="text-dark">AI tools like ChatGPT</strong> to bring more creativity and speed to my work.
+                    </span>
+                </p>
+
+                <button onclick="toggleAboutText()" id="toggleBtn" class="btn btn-primary rounded-pill px-5 py-2 shadow-sm">
+                    Read My Story
+                </button>
+
+                <div class="row g-4 mt-4">
+                    <div class="col-6">
+                        <div class="p-4 stat-card rounded-4 text-center">
+                            <h2 class="fw-bold text-primary mb-0">1+</h2>
+                            <span class="text-muted fw-500">Years Experience</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-4 stat-card rounded-4 text-center">
+                            <h2 class="fw-bold text-primary mb-0">15+</h2>
+                            <span class="text-muted fw-500">Projects Done</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="video-wrapper">
+                    <iframe width="100%" height="400" 
+                        src="https://www.youtube.com/embed/YOUR_INTRO_VIDEO" 
+                        title="Intro Video" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <section id="skills" class="py-5">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-5" data-aos="fade-up">My Expertise</h2>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="flip-left">
+                    <div class="glass-card p-5">
+                        <i class="fas fa-layer-group fs-1 text-primary mb-4"></i>
+                        <h4>Frontend</h4>
+                        <div class="mt-3">
+                            <span class="skill-tag">HTML5</span> <span class="skill-tag">CSS3</span>
+                            <span class="skill-tag">Bootstrap</span> <span class="skill-tag">JavaScript</span>
+                           <span class="skill-tag">React (Basic)</span>
+
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="flip-left" data-aos-delay="100">
+                    <div class="glass-card p-5">
+                        <i class="fas fa-server fs-1 text-success mb-4"></i>
+                        <h4>Backend</h4>
+                        <div class="mt-3">
+                            <span class="skill-tag">PHP</span> <span class="skill-tag">Laravel</span>
+                            <span class="skill-tag">MySQL</span> <span class="skill-tag">WordPress (Intermediate)</span>
+                            <span class="skill-tag">GitHub</span>
+                            <span class="skill-tag">Hostinger pannel</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
+                    <div class="glass-card p-5">
+                        <i class="fas fa-chart-pie fs-1 text-warning mb-4"></i>
+                        <h4>Marketing</h4>
+                        <div class="mt-3">
+                            <span class="skill-tag">SEO</span> <span class="skill-tag">GA4</span>
+                            <span class="skill-tag">Search Console</span>
+                            <span class="skill-tag">SMH</span>
+                            <span class="skill-tag">Keyword Research & Planning</span>
+                            <span class="skill-tag">Blogging</span>
+                             <span class="skill-tag">youtube</span>
+                             <span class="skill-tag">Basic Video editing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5" data-aos="fade-up">Latest <span class="text-primary">Projects</span></h2>
+            <div class="row g-4">
+<!--                 
+                <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                    <div class="glass-card bg-white text-dark overflow-hidden">
+                        <div class="media-box">
+                            <span class="badge-type">Video Demo</span>
+                            <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="card-body-custom">
+                            <div>
+                                <h5 class="fw-bold">Dhanbhumi Dashboard</h5>
+                                <p class="small text-muted">A full-stack project video walkthrough.</p>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="#" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="#" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card bg-white text-dark overflow-hidden">
+                        <div class="media-box">
+                            <span class="badge-type">Live Image</span>
+                            <img src="Screenshot 2025-08-19 132825.png" alt="Project">
+                        </div>
+                        <div class="card-body-custom">
+                            <div>
+                                <h5 class="fw-bold">Dhanbhumi.com</h5>
+                               
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="https://github.com/" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://dhanbhumi.com/" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card bg-white text-dark overflow-hidden">
+                        <div class="media-box">
+                            <span class="badge-type">Live Image</span>
+                            <img src="Screenshot 2025-09-22 123620.png" alt="Project">
+                        </div>
+                        <div class="card-body-custom">
+                            <div>
+                                <h5 class="fw-bold">Hemis One</h5>
+                               
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="https://github.com/" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://hemisindia.com/" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+               <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card bg-white text-dark overflow-hidden">
+                        <div class="media-box">
+                            <span class="badge-type">Live Image</span>
+                            <img src="Screenshot 2025-12-02 130508.png" alt="Project">
+                        </div>
+                        <div class="card-body-custom">
+                            <div>
+                                <h5 class="fw-bold">Mayrahomes.com</h5>
+                               
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="https://github.com/" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://mayrahomes.com/" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+              <!-- slider -->              
+              <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="glass-card bg-white text-dark overflow-hidden">
+        <div class="media-box">
+            <span class="badge-type">Auto Slider</span>
+            <div id="sliderLeadsblink" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modalLeadsblink">
+                    <div class="carousel-item active" data-bs-interval="3000">
+                        <img src="Screenshot 2025-12-02 131159.png" class="d-block w-100" alt="Leadsblink 1">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600" class="d-block w-100" alt="Leadsblink 2">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body-custom p-4">
+            <h5 class="fw-bold">Leadsblink.com</h5>
+            <div class="d-flex gap-2 mt-3">
+                <a href="https://github.com/" target="_blank" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://leadsblink.com/" target="_blank" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalLeadsblink" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-header border-0"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body p-0">
+                <div id="carouselL" class="carousel slide carousel-dark" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active"><img src="Screenshot 2025-12-02 131159.png" class="d-block w-100 rounded"></div>
+                        <div class="carousel-item"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600" class="d-block w-100 rounded"></div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselL" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselL" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- slider -->
+<div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="glass-card bg-white text-dark overflow-hidden">
+        <div class="media-box">
+            <span class="badge-type">Auto Slider</span>
+            
+            <div id="ansaSlider" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#ansaModal">
+                    <div class="carousel-item active" data-bs-interval="3000">
+                        <img src="Screenshot 2025-12-02 133804.png" class="d-block w-100" alt="Ansa 1">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="Screenshot 2025-12-25 190553.png" class="d-block w-100" alt="Ansa 2">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body-custom p-4">
+            <div>
+                <h5 class="fw-bold">Ansa innovations (live on Github)</h5>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="https://github.com/sajidali011/ansa_innovation" target="_blank" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://github.com/sajidali011/ansa_innovation" target="_blank" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ansaModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div id="ansaModalCarousel" class="carousel slide carousel-dark" data-bs-ride="carousel">
+                    
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="Screenshot 2025-12-02 133804.png" class="d-block w-100 rounded" alt="Large View 1">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="Screenshot 2025-12-25 190553.png" class="d-block w-100 rounded" alt="Large View 2">
+                        </div>
+                         <div class="carousel-item">
+                            <img src="Screenshot 2025-12-25 190737.png" class="d-block w-100 rounded" alt="Large View 2">
+                        </div>
+                         <div class="carousel-item">
+                            <img src="Screenshot 2025-12-25 190919.png" class="d-block w-100 rounded" alt="Large View 2">
+                        </div>
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#ansaModalCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#ansaModalCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+                
+               <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card bg-white text-dark overflow-hidden">
+                        <div class="media-box">
+                            <span class="badge-type">Live Image</span>
+                            <img src="Screenshot 2025-05-22 143258.png" alt="Project">
+                        </div>
+                        <div class="card-body-custom">
+                            <div>
+                                <h5 class="fw-bold">Siyomtvasta.com</h5>
+                               
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="https://github.com/sajidali011/siyom-tvasta.com" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://siyomtvasta.com/" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                
+               <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card bg-white text-dark overflow-hidden">
+                        <div class="media-box">
+                            <span class="badge-type">Live Image</span>
+                            <img src="Screenshot 2025-09-22 124034.png" alt="Project">
+                        </div>
+                        <div class="card-body-custom">
+                            <div>
+                                <h5 class="fw-bold">millgrove.in</h5>
+                               
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="https://github.com/" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://www.millgrove.in/" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                
+               <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card bg-white text-dark overflow-hidden">
+                        <div class="media-box">
+                            <span class="badge-type">Live Image</span>
+                            <img src="Screenshot 2025-05-22 143709.png" alt="Project">
+                        </div>
+                        <div class="card-body-custom">
+                            <div>
+                                <h5 class="fw-bold">Ritukindergarten.in</h5>
+                               
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="https://github.com/sajidali011/ritukindergarten.in" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://ritukindergarten.in/" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                
+               <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card bg-white text-dark overflow-hidden">
+                        <div class="media-box">
+                            <span class="badge-type">Live Image</span>
+                            <img src="Screenshot 2025-08-19 135328.png" alt="Project">
+                        </div>
+                        <div class="card-body-custom">
+                            <div>
+                                <h5 class="fw-bold">Webs jyoti</h5>
+                               
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="https://github.com/" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://www.websjyoti.com/" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+<!-- slider  -->
+<div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="glass-card bg-white text-dark overflow-hidden">
+        <div class="media-box">
+            <span class="badge-type">Auto Slider</span>
+            
+            <div id="kesavkunjSlider" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#kesavkunjModal">
+                    <div class="carousel-item active" data-bs-interval="3000">
+                        <img src="Screenshot 2025-12-02 134118.png" class="d-block w-100" alt="Kesavkunj 1">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="Screenshot 2025-12-25 191404.png" class="d-block w-100" alt="Kesavkunj 2">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body-custom p-4">
+            <div>
+                <h5 class="fw-bold">Kesavkunj (live on Github)</h5>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="https://github.com/dashboard" target="_blank" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://github.com/dashboard" target="_blank" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="kesavkunjModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div id="kesavkunjModalCarousel" class="carousel slide carousel-dark" data-bs-ride="carousel">
+                    
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="Screenshot 2025-12-02 134118.png" class="d-block w-100 rounded" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="Screenshot 2025-12-25 191404.png" class="d-block w-100 rounded" alt="...">
+                        </div>
+
+                         <div class="carousel-item">
+                            <img src="Screenshot 2025-12-25 191404.png" class="d-block w-100 rounded" alt="...">
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="Screenshot 2025-12-25 191545.png" class="d-block w-100 rounded" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="Screenshot 2025-12-25 191545.png" class="d-block w-100 rounded" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="Screenshot 2025-12-25 191833.png" class="d-block w-100 rounded" alt="...">
+                        </div>
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#kesavkunjModalCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#kesavkunjModalCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                
+               <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card bg-white text-dark overflow-hidden">
+                        <div class="media-box">
+                            <span class="badge-type">Live Image</span>
+                            <img src="Screenshot 2025-05-22 143054.png" alt="Project">
+                        </div>
+                        <div class="card-body-custom">
+                            <div>
+                                <h5 class="fw-bold">Azagems.com</h5>
+                               
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="https://github.com/" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://azagems.com/" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                 <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card bg-white text-dark overflow-hidden">
+                        <div class="media-box">
+                            <span class="badge-type">Live Image</span>
+                            <img src="Screenshot 2025-12-02 131434.png" alt="Project">
+                        </div>
+                        <div class="card-body-custom">
+                            <div>
+                                <h5 class="fw-bold">Deendayal-plot.com</h5>
+                               
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="https://github.com/" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://deendayal-plot.com/" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                 <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card bg-white text-dark overflow-hidden">
+                        <div class="media-box">
+                            <span class="badge-type">Live Image</span>
+                            <img src="Screenshot 2025-08-19 135704.png" alt="Project">
+                        </div>
+                        <div class="card-body-custom">
+                            <div>
+                                <h5 class="fw-bold">viralsachnewz.com</h5>
+                               
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="https://github.com/" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://viralsachnewz.com/" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                 <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card bg-white text-dark overflow-hidden">
+                        <div class="media-box">
+                            <span class="badge-type">Live Image</span>
+                            <img src="Screenshot 2025-09-22 124731.png" alt="Project">
+                        </div>
+                        <div class="card-body-custom">
+                            <div>
+                                <h5 class="fw-bold">subscription-plans (Only testing Razorpay)</h5>
+                               
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="https://github.com/" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://sajidali011.github.io/subscription-plans/#" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+                 <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card bg-white text-dark overflow-hidden">
+                        <div class="media-box">
+                            <span class="badge-type">Live Image</span>
+                            <img src="black-construction-flat-website_23-2148219966.avif" alt="Project">
+                        </div>
+                        <div class="card-body-custom">
+                            <div>
+                                <h5 class="fw-bold">nripropertiesexprincipal (Comming Soon)</h5>
+                               
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="#" class="btn btn-outline-dark btn-sm rounded-pill w-100"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="#" class="btn btn-primary btn-sm rounded-pill w-100"><i class="fas fa-eye"></i> Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+
+<section id="certificates" class="py-5" style="background-color: #fcfcfc;">
+    <div class="container">
+        
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="fw-bold display-6">Professional Certifications</h2>
+            <p class="text-muted">Recognized achievements from Webs Jyoti</p>
+            <div class="mx-auto bg-primary" style="width: 60px; height: 3px;"></div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            
+            <div class="col-md-5" data-aos="zoom-in">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#certModal1">
+                    <div class="ratio ratio-16x9 bg-light">
+                        <img src="Screenshot 2025-12-25 195447.png" class="card-img-top object-fit-contain p-2" alt="Web Development">
+                    </div>
+                    <div class="card-body p-4 text-center">
+                        <span class="badge rounded-pill bg-primary-subtle text-primary px-3 mb-2">Web Development</span>
+                        <h5 class="card-title fw-bold">Full Stack Web Development</h5>
+                        <p class="card-text text-muted small mb-3">Issued by: <strong>Webs Jyoti</strong></p>
+                        <button class="btn btn-outline-primary rounded-pill px-4 btn-sm w-100 fw-600">
+                            <i class="fas fa-eye me-1"></i> View Certificate
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5" data-aos="zoom-in" data-aos-delay="100">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#certModal2">
+                    <div class="ratio ratio-16x9 bg-light">
+                        <img src="WhatsApp Image 2025-12-25 at 19.52.04_f912c921.jpg" class="card-img-top object-fit-contain p-2" alt="Digital Marketing">
+                    </div>
+                    <div class="card-body p-4 text-center">
+                        <span class="badge rounded-pill bg-danger-subtle text-danger px-3 mb-2">Digital Marketing</span>
+                        <h5 class="card-title fw-bold">Advanced Digital Marketing</h5>
+                        <p class="card-text text-muted small mb-3">Issued by: <strong>Webs Jyoti</strong></p>
+                        <button class="btn btn-outline-danger rounded-pill px-4 btn-sm w-100 fw-600">
+                            <i class="fas fa-eye me-1"></i> View Certificate
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="certModal1" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content rounded-4 border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold">Full Stack Web Development - Webs Jyoti</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <img src="Screenshot 2025-12-25 195447.png" class="img-fluid w-100 rounded-bottom-4" alt="Web Dev Certificate">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="certModal2" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content rounded-4 border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold">Advanced Digital Marketing - Webs Jyoti</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <img src="WhatsApp Image 2025-12-25 at 19.52.04_f912c921.jpg" class="img-fluid w-100 rounded-bottom-4" alt="Marketing Certificate">
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+<style>
+    /* 1. Global & Sections Style */
+    .youtube-section {
+        background: radial-gradient(circle at center, rgba(255, 0, 0, 0.05) 0%, #ffffff 70%);
+        position: relative;
+        overflow: hidden;
+        padding: 80px 0;
+    }
+
+    /* 2. YouTube Slider Animation */
+    .yt-slider-container {
+        display: flex;
+        overflow: hidden;
+        padding: 30px 0;
+    }
+
+    .yt-slider {
+        display: flex;
+        animation: scroll 25s linear infinite;
+    }
+
+    .yt-slider:hover {
+        animation-play-state: paused;
+    }
+
+    .yt-card {
+        width: 320px;
+        margin: 0 15px;
+        flex-shrink: 0;
+        transition: all 0.4s ease;
+    }
+
+    .yt-card img {
+        height: 180px;
+        object-fit: cover;
+        width: 100%;
+        border-bottom: 2px solid #ff0000;
+    }
+
+    .yt-card:hover {
+        transform: translateY(-12px) scale(1.02);
+    }
+
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-350px * 5)); }
+    }
+
+    /* 3. Glowing Image Section & NEW BUTTON */
+    .glow-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 100px 0;
+        background: #ffffff;
+    }
+
+    .glowing-wrapper {
+        position: relative;
+        max-width: 850px;
+        width: 95%;
+        z-index: 1;
+    }
+
+    /* Advanced Blue/Red Glow Effect */
+    .glowing-wrapper::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 110%;
+        height: 110%;
+        background: radial-gradient(circle, rgba(13, 110, 253, 0.2) 0%, rgba(255, 0, 0, 0.05) 50%, rgba(255, 255, 255, 0) 75%);
+        border-radius: 50%;
+        z-index: -1;
+        animation: pulseGlow 5s infinite ease-in-out;
+    }
+
+    .glow-img {
+        width: 100%;
+        border-radius: 40px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.12);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    /* Excellence Title Styling */
+    .excellence-title {
+        font-size: 3rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #1a1a1a 0%, #ff0000 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 15px;
+    }
+
+    /* NEW: View Channel Button Style */
+    .view-channel-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 40px;
+        background: #000;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 60px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-top: 25px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        border: 2px solid transparent;
+    }
+
+    .view-channel-btn:hover {
+        background: #ff0000;
+        color: #fff;
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(255, 0, 0, 0.3);
+    }
+
+    .view-channel-btn i {
+        font-size: 1.4rem;
+        transition: transform 0.3s ease;
+    }
+
+    .view-channel-btn:hover i {
+        transform: scale(1.2);
+    }
+
+    @keyframes pulseGlow {
+        0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.4; }
+        50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.8; }
+    }
+
+    .glow-text {
+        text-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+    }
+
+
+    /* Final Footer Styling */
+    .premium-footer {
+        background: #000; /* Dark Theme for Professional Look */
+        color: #fff;
+        padding: 100px 0 30px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Background Subtle Glow */
+    .premium-footer::before {
+        content: "";
+        position: absolute;
+        top: -150px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(255, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+        z-index: 0;
+    }
+
+    .footer-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .footer-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        letter-spacing: -2px;
+        margin-bottom: 20px;
+        background: linear-gradient(to right, #ffffff, #888888);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .footer-email {
+        font-size: 1.5rem;
+        color: #ff0000;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid transparent;
+    }
+
+    .footer-email:hover {
+        color: #fff;
+        border-bottom: 1px solid #ff0000;
+        letter-spacing: 1px;
+    }
+
+    /* Social Icons Animation */
+    .social-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 50px;
+    }
+
+    .social-icon-btn {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: #fff;
+        font-size: 1.5rem;
+        text-decoration: none;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .social-icon-btn:hover {
+        background: #fff;
+        color: #000;
+        transform: translateY(-10px) rotate(360deg);
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+
+    .social-icon-btn.wa:hover { background: #25D366; color: white; border-color: #25D366; }
+    .social-icon-btn.ig:hover { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); color: white; border-color: transparent; }
+
+    .copyright-text {
+        margin-top: 80px;
+        color: #666;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .footer-title { font-size: 2.5rem; }
+        .footer-email { font-size: 1.2rem; }
+    }
+</style>
+
+<section class="glow-container">
+    <div class="glowing-wrapper text-center" data-aos="fade-up">
+        <img src="WhatsApp Image 2025-12-25 at 16.03.30_33c28038.jpg" alt="Creative Workspace" class="glow-img">
+        
+        <div class="mt-5">
+            <h1 class="excellence-title">Building Digital Excellence</h1>
+          
+            
+            <a href="https://www.youtube.com/@Rv_by_sajid" target="_blank" class="view-channel-btn">
+                <i class="fab fa-youtube text-white"></i> View My Channel
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="youtube-section border-top">
+    <div class="container text-center mb-5">
+        <h2 class="fw-bold glow-text"><i class="fab fa-youtube text-danger"></i> Featured Content</h2>
+        <div class="mx-auto bg-danger rounded-pill mt-2" style="width: 50px; height: 3px;"></div>
+    </div>
+    
+    <div class="yt-slider-container">
+        <div class="yt-slider">
+            <div class="yt-card">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                    <img src="Screenshot 2025-12-25 134427.png" alt="YT 1">
+                    <div class="p-3">
+                        <a href="https://youtu.be/-Sc3ARiSQ8M?si=B-HJyjCLRYzQz9le" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill w-100 fw-bold">Watch Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="yt-card">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                    <img src="Screenshot 2025-12-25 151924.png" alt="YT 2">
+                    <div class="p-3">
+                        <a href="https://youtu.be/a1A6mVYjXeY?si=xgmt2Tvv6VXUZINa" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill w-100 fw-bold">Watch Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="yt-card">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                    <img src="Screenshot 2025-12-25 152148.png" alt="YT 3">
+                    <div class="p-3">
+                        <a href="https://youtu.be/SsVpdb9ANVQ?si=cRNppqqxm4DPRMQC" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill w-100 fw-bold">Watch Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="yt-card">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                    <img src="Screenshot 2025-12-25 152849.png" alt="YT 4">
+                    <div class="p-3">
+                        <a href="https://youtu.be/AOzDXFSX6vE?si=5Tz4w-HOvFNpcfG9" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill w-100 fw-bold">Watch Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="yt-card">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                    <img src="WhatsApp Image 2025-12-25 at 15.37.39_5ff7cc97.jpg" alt="YT 5">
+                    <div class="p-3">
+                        <a href="#" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill w-100 fw-bold">Watch Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer id="contact" class="premium-footer text-center">
+    <div class="container footer-content">
+        <h2 class="footer-title" data-aos="fade-up">Let's Work Together</h2>
+        
+        <div data-aos="fade-up" data-aos-delay="100">
+            <a href="mailto:sajid0005ali@gmail.com" class="footer-email">sajid0005ali@gmail.com</a>
+        </div>
+
+
+        <div data-aos="fade-up" data-aos-delay="150" style="margin-bottom: 40px;">
+            <ul style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 30px; align-items: center; flex-wrap: wrap;">
+                <li><a href="#about" style="color: #bbb; text-decoration: none; font-weight: 500; transition: 0.3s; font-size: 1.1rem;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#bbb'">About</a></li>
+                <li><a href="#skills" style="color: #bbb; text-decoration: none; font-weight: 500; transition: 0.3s; font-size: 1.1rem;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#bbb'">Skills</a></li>
+                <li><a href="#projects" style="color: #bbb; text-decoration: none; font-weight: 500; transition: 0.3s; font-size: 1.1rem;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#bbb'">Projects</a></li>
+               <li>
+    <a class="btn btn-primary rounded-pill px-4" 
+       href="tel:+917497817973" 
+       style="background: #0d6efd; color: #fff; padding: 8px 25px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: 0.3s; border: 1px solid #0d6efd;" 
+       onmouseover="this.style.background='transparent'; this.style.color='#0d6efd'" 
+       onmouseout="this.style.background='#0d6efd'; this.style.color='#fff'">
+       <i class="fas fa-phone-alt me-2"></i> Contact Me
+    </a>
+</li>
+            </ul>
+        </div>
+
+        <div class="social-wrapper" data-aos="fade-up" data-aos-delay="200">
+            <a href="tel:+917497817973" class="social-icon-btn wa" title="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.instagram.com/sajid_ali0005?igsh=MXN5Ymw5YWRxdjBjeQ==" class="social-icon-btn ig" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/sajid-ali-240854266/" class="social-icon-btn" title="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
+
+        <div class="pt-5 mt-5 border-top border-secondary opacity-25"></div>
+        <p class="copyright-text">© 2026 SAJID ALI PORTFOLIO</p>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+
+
+
+<script>
+function toggleAboutText() {
+    var dots = document.getElementById("dots");
+    var moreText = document.getElementById("moreText");
+    var btnText = document.getElementById("toggleBtn");
+
+    if (dots.style.display === "none") {
+        dots.style.display = "inline";
+        btnText.innerHTML = "Read My Story";
+        moreText.style.display = "none";
+    } else {
+        dots.style.display = "none";
+        btnText.innerHTML = "Show Less";
+        moreText.style.display = "inline";
+    }
+}
+</script>
+<script>
+function toggleAboutText() {
+    var dots = document.getElementById("dots");
+    var moreText = document.getElementById("moreText");
+    var btnText = document.getElementById("toggleBtn");
+
+    if (dots.style.display === "none") {
+        dots.style.display = "inline";
+        btnText.innerHTML = "Show More";
+        moreText.style.display = "none";
+    } else {
+        dots.style.display = "none";
+        btnText.innerHTML = "Show Less";
+        moreText.style.display = "inline";
+    }
+}
+</script>
+</body>
+</html>
