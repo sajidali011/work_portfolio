@@ -182,34 +182,247 @@
     <i class="fas fa-phone-alt"></i>
 </a>
 
-    <a href="https://www.youtube.com/@Rv_by_sajid" class="yt-float" target="_blank" title="Watch My Tutorials">
-        <i class="fab fa-youtube"></i>
-    </a>
+<a href="https://www.youtube.com/@Rv_by_sajid" class="yt-float" target="_blank" title="Watch My Tutorials">
+    <i class="fab fa-youtube"></i>
+</a>
 
+<style>
+    /* Common Style for all floating buttons */
+    .yt-float, .wa-float, .phone-float {
+        position: fixed;
+        left: 20px; /* Right se badal kar Left kar diya gaya hai */
+        width: 50px;
+        height: 50px;
+        color: #FFF;
+        border-radius: 50px;
+        text-align: center;
+        font-size: 25px;
+        box-shadow: 2px 2px 3px #999;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    /* Positions */
+    .yt-float { bottom: 20px; background-color: #FF0000; } 
+    .wa-float { bottom: 80px; background-color: #25d366; } 
+    .phone-float { bottom: 140px; background-color: #007bff; }
+</style>
+
+
+<!-- chatbot -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Common Style for all floating buttons */
-.yt-float, .wa-float, .phone-float {
-    position: fixed;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    color: #FFF;
-    border-radius: 50px;
-    text-align: center;
-    font-size: 25px;
-    box-shadow: 2px 2px 3px #999;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-}
+        :root { 
+            --primary: #007bff; 
+            --primary-dark: #0056b3;
+            --bg-glass: rgba(255, 255, 255, 0.9);
+            --bot-msg: #f1f0f0;
+            --shadow: 0 12px 28px rgba(0,0,0,0.12);
+        }
 
-/* Positions (Adjusting gap between buttons) */
-.yt-float { bottom: 20px; background-color: #FF0000; } /* Sabse niche */
-.wa-float { bottom: 80px; background-color: #25d366; } /* WhatsApp beech mein */
-.phone-float { bottom: 140px; background-color: #007bff; } /* Phone sabse upar */
+        body { font-family: 'Inter', -apple-system, sans-serif; background: #f0f2f5; }
+
+        /* Floating Welcome Bubble */
+        .chat-welcome-bubble {
+            position: fixed; bottom: 95px; right: 25px;
+            background: white; padding: 12px 18px; border-radius: 20px 20px 5px 20px;
+            box-shadow: var(--shadow); font-size: 14px; color: #444;
+            border: 1px solid rgba(0,0,0,0.05); z-index: 999;
+            animation: float 3s ease-in-out infinite; cursor: pointer;
+        }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* Floating Trigger Button */
+        #chat-circle {
+            position: fixed; bottom: 25px; right: 25px;
+            background: var(--primary); width: 65px; height: 65px; border-radius: 50%;
+            color: white; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 6px 20px rgba(0,123,255,0.4); z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #chat-circle:hover { transform: scale(1.1); background: var(--primary-dark); }
+
+        /* Main Chat Window */
+        .chat-box {
+            display: none; position: fixed; right: 25px; bottom: 100px;
+            width: 380px; max-width: calc(100vw - 50px); height: 550px; 
+            max-height: calc(100vh - 150px);
+            background: var(--bg-glass); backdrop-filter: blur(10px);
+            border-radius: 20px; box-shadow: var(--shadow);
+            flex-direction: column; z-index: 1001; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .chat-header { 
+            background: var(--primary); color: white; padding: 20px; 
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .header-info { display: flex; align-items: center; gap: 10px; }
+        .online-dot { width: 10px; height: 10px; background: #2ecc71; border-radius: 50%; border: 2px solid #fff; }
+
+        .chat-body { flex: 1; padding: 20px; overflow-y: auto; background: rgba(244, 247, 246, 0.5); display: flex; flex-direction: column; gap: 10px; }
+        
+        /* Message Bubbles */
+        .msg { padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.5; max-width: 80%; animation: fadeIn 0.3s ease; }
+        .bot { background: var(--bot-msg); color: #333; align-self: flex-start; border-bottom-left-radius: 4px; }
+        .user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Typing Indicator */
+        .typing { display: none; padding: 10px 15px; background: var(--bot-msg); border-radius: 15px; width: fit-content; margin-bottom: 10px; }
+        .typing span { width: 6px; height: 6px; background: #999; border-radius: 50%; display: inline-block; animation: blink 1s infinite; }
+        .typing span:nth-child(2) { animation-delay: 0.2s; }
+        .typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        /* Options/Chips */
+        .options-container { 
+            padding: 10px 15px; background: white; border-top: 1px solid rgba(0,0,0,0.05);
+            display: flex; gap: 8px; overflow-x: auto; white-space: nowrap; 
+        }
+        .options-container::-webkit-scrollbar { display: none; }
+        .opt-btn { 
+            background: #fff; border: 1.5px solid var(--primary); color: var(--primary); 
+            padding: 8px 16px; border-radius: 25px; cursor: pointer; font-size: 13px; font-weight: 500;
+            transition: 0.2s; 
+        }
+        .opt-btn:hover { background: var(--primary); color: white; }
+
+        /* Input Area */
+        .chat-input-area { 
+            padding: 15px; background: white; border-top: 1px solid rgba(0,0,0,0.05); 
+            display: flex; align-items: center; gap: 10px; 
+        }
+        .chat-input-area input { 
+            flex: 1; border: none; outline: none; padding: 10px; 
+            background: #f8f9fa; border-radius: 25px; padding-left: 15px; font-size: 14px;
+        }
+        .send-btn { background: var(--primary); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; transition: 0.2s; }
+        .send-btn:hover { background: var(--primary-dark); transform: rotate(15deg); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            .chat-box { width: 100%; right: 0; bottom: 0; height: 100%; border-radius: 0; }
+            .chat-header { border-radius: 0; }
+        }
     </style>
+
+
+<div class="chat-welcome-bubble" id="welcomeMsg" onclick="toggleChat()">
+    Hi! Need help with Sajid's work? 🤖
+</div>
+
+<div id="chat-circle" onclick="toggleChat()">
+    <i class="fas fa-comment-dots fa-2x"></i>
+</div>
+
+<div class="chat-box" id="chatBox">
+    <div class="chat-header">
+        <div class="header-info">
+            <div class="online-dot"></div>
+            <div>
+                <div style="font-weight: 600; font-size: 16px;">Sajid's Assistant</div>
+                <div style="font-size: 11px; opacity: 0.8;">Always active</div>
+            </div>
+        </div>
+        <i class="fas fa-times" style="cursor:pointer; font-size: 20px;" onclick="toggleChat()"></i>
+    </div>
+
+    <div class="chat-body" id="chatLogs">
+        <div class="msg bot">Hi! I'm Sajid's virtual assistant. I can show you his skills, projects, or help you contact him. What's on your mind?</div>
+    </div>
+
+    <div class="typing" id="typingIndicator">
+        <span></span><span></span><span></span>
+    </div>
+
+    <div class="options-container">
+        <button class="opt-btn" onclick="handleInput('Skills')"><i class="fas fa-code"></i> Skills</button>
+        <button class="opt-btn" onclick="handleInput('Projects')"><i class="fas fa-laptop-code"></i> Projects</button>
+        <button class="opt-btn" onclick="handleInput('Contact')"><i class="fas fa-envelope"></i> Contact</button>
+        <button class="opt-btn" onclick="handleInput('Experience')"><i class="fas fa-briefcase"></i> Experience</button>
+    </div>
+
+    <form class="chat-input-area" onsubmit="event.preventDefault(); processInput();">
+        <input type="text" id="uInp" placeholder="Ask me something..." autocomplete="off">
+        <button type="submit" class="send-btn"><i class="fas fa-paper-plane"></i></button>
+    </form>
+</div>
+
+<script>
+    const chatLogs = document.getElementById("chatLogs");
+    const welcomeMsg = document.getElementById("welcomeMsg");
+    const typingIndicator = document.getElementById("typingIndicator");
+
+    function toggleChat() {
+        const box = document.getElementById("chatBox");
+        const isOpen = box.style.display === "flex";
+        box.style.display = isOpen ? "none" : "flex";
+        welcomeMsg.style.display = isOpen ? "block" : "none";
+    }
+
+    function processInput() {
+        const inputField = document.getElementById('uInp');
+        handleInput(inputField.value);
+    }
+
+    function handleInput(text) {
+        if(!text.trim()) return;
+        appendMsg(text, 'user');
+        document.getElementById("uInp").value = "";
+
+        // Show typing indicator
+        typingIndicator.style.display = "block";
+        chatLogs.scrollTop = chatLogs.scrollHeight;
+
+        let reply = "";
+        const lowText = text.toLowerCase();
+
+        // Professional Responses
+        setTimeout(() => {
+            typingIndicator.style.display = "none";
+            
+            if(lowText.includes("hi") || lowText.includes("hello")) {
+                reply = "Hello! 👋 I'm here to help you navigate Sajid's portfolio. You can check his <b>Skills</b> or <b>Latest Projects</b>.";
+            } 
+            else if(lowText.includes("skill")) {
+                reply = "<b>Sajid's Technical Stack:</b><br><br>🚀 <b>Frontend:</b> HTML5, CSS3, React (Basic), Bootstrap<br>⚙️ <b>Backend:</b> PHP, Laravel, MySQL, WordPress<br>📈 <b>Marketing:</b> SEO, GA4, SMM, Search Console,Blogging etc.";
+            }
+            else if(lowText.includes("project")) {
+                reply = "<b>Top Projects:</b><br><br>🏠 <a href='https://deendayal-plot.com/' target='_blank' style='color:var(--primary)'>Deendayal Plots</a><br> 🏠<a href='https://dhanbhumi.com/' target='_blank' style='color:var(--primary)'>Dhanbhumi</a><br>🏢 <a href='https://mayrahomes.com/' target='_blank' style='color:var(--primary)'>Mayra Homes</a><br>✨ Hemis One,";
+            }
+            else if(lowText.includes("contact") || lowText.includes("hire")) {
+                reply = "You can reach Sajid directly:<br><br>📧 <a href='mailto:sajid0005ali@gmail.com'>sajid0005ali@gmail.com</a><br>📞 +91 7497817973<br><br>He's currently available for new opportunities!";
+            }
+            else if(lowText.includes("experience")) {
+                reply = "I’m a web developer and digital marketer with 1 year of experience.\nI’ve worked with Siyom Tvasta Pvt. Ltd. and also handled freelance projects with DreamersDreamIndia, helping clients build and grow their online presence.";
+            }
+            else {
+                reply = "That's a great question! While I'm still learning, I can definitely tell you about Sajid's <b>Skills</b>, <b>Projects</b>, or provide his <b>Contact Info</b>.";
+            }
+
+            appendMsg(reply, 'bot');
+        }, 1200); // Simulated AI delay
+    }
+
+    function appendMsg(text, type) {
+        const div = document.createElement("div");
+        div.className = `msg ${type}`;
+        div.innerHTML = text;
+        chatLogs.appendChild(div);
+        chatLogs.scrollTop = chatLogs.scrollHeight;
+    }
+</script>
+
+<!-- chatbot end-->
+
 
     <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white py-3">
         <div class="container">
